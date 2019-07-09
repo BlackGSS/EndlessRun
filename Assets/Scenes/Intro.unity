@@ -659,8 +659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 884a43d47fd26f148b1c80ae389409ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChangeScene: 0
-  Anim: {fileID: 1918869781}
+  _changeScene: 0
+  _anim: {fileID: 1918869781}
 --- !u!95 &1918869781
 Animator:
   serializedVersion: 3
