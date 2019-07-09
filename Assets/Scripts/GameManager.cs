@@ -9,44 +9,76 @@ public class GameManager : MonoBehaviour
 	public List<GameObject> players;
 	public static int playerSelected = 0;
 
-	public GameObject powerUp;
-	private float _timeToPower;
+	//public GameObject powerUp;
+	//private float _timeToPower;
 
-	public Image FadeIn;
-	public int FadeOffset;
+	[SerializeField]
+	private Image _fadeIn;
+
+	[SerializeField]
+	private int _fadeOffset;
+
 	private float _transition;
-	public TextMeshProUGUI Score, Highscore;
-	public DeathMenu DeathMenu;
+
+	public TextMeshProUGUI score, highScore;
+	public DeathMenu deathMenu;
+
+	[SerializeField]
+	private GameObject _pauseMenu;
+
+	public bool isPaused;
+
+	public static GameManager instance;
 
 	// Use this for initialization
 	void Awake()
 	{
-		FadeIn.gameObject.SetActive(true);
-		_timeToPower = 0;
+		if (instance == null)
+		{
+			instance = this;
+		}
+
+		_pauseMenu.SetActive(false);
+		_fadeIn.gameObject.SetActive(true);
+		//_timeToPower = 0;
 		GameObject player = Instantiate(players[playerSelected], transform.position, Quaternion.Euler(0, 0, 0));
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (FadeIn.gameObject.activeSelf)
+		if (_fadeIn.gameObject.activeSelf)
 		{
-			_transition += Time.deltaTime / FadeOffset;
-			Color tempColor = FadeIn.color;
+			_transition += Time.deltaTime / _fadeOffset;
+			Color tempColor = _fadeIn.color;
 			tempColor.a -= _transition;
-			FadeIn.color = tempColor;
+			_fadeIn.color = tempColor;
 
-			if (FadeIn.color.a <= 0)
+			if (_fadeIn.color.a <= 0)
 			{
-				FadeIn.gameObject.SetActive(false);
+				_fadeIn.gameObject.SetActive(false);
 			}
 		}
+	}
 
-		//_timeToPower += Time.deltaTime;
+	public void Pause()
+	{
+		if (!_pauseMenu.activeSelf)
+		{
+			_pauseMenu.SetActive(true);
+			isPaused = true;
+		}
+		else
+		{
+			_pauseMenu.SetActive(false);
+			isPaused = false;
+		}
+	}
 
-		//if (_timeToPower > Random.Range(8, 15))
-		//{
-
-		//}
+	public void Resume()
+	{
+		if (isPaused)
+			_pauseMenu.SetActive(false);
+			isPaused = false;
 	}
 }

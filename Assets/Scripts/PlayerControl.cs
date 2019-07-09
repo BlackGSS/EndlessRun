@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-	public float Speed = 5;
-	public float Gravity = 12;
-	public float JumpSpeed;
+	[SerializeField]
+	private float _speed = 10;
+
+	[SerializeField]
+	private float _gravity = 12;
+
+	[SerializeField]
+	private float _jumpSpeed;
 
 	public bool isDead = false;
 
@@ -31,12 +36,12 @@ public class PlayerControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (isDead)
+		if (isDead || GameManager.instance.isPaused)
 			return;
 
 		if (Time.time - _startTime < _animationDuration)
 		{
-			_control.Move(Vector3.forward * Speed * Time.deltaTime);
+			_control.Move(Vector3.forward * _speed * Time.deltaTime);
 			return;
 		}
 
@@ -44,28 +49,31 @@ public class PlayerControl : MonoBehaviour
 
 		if (_control.isGrounded)
 		{
-			JumpSpeed = -0.5f;
+			_jumpSpeed = -0.5f;
 		}
 		else
 		{
-			JumpSpeed -= Gravity * Time.deltaTime;
+			_jumpSpeed -= _gravity * Time.deltaTime;
 		}
 
 		if (Input.GetMouseButton(0))
 		{
-			if (Input.mousePosition.x > Screen.width / 2)
+			if (Input.mousePosition.y < Screen.height / 2)
 			{
-				_vector3Movement.x = Speed;
-			}
-			else
-			{
-				_vector3Movement.x = -Speed;
+				if (Input.mousePosition.x > Screen.width / 2)
+				{
+					_vector3Movement.x = _speed;
+				}
+				else
+				{
+					_vector3Movement.x = -_speed;
+				}
 			}
 		}
 
-		_vector3Movement.y = JumpSpeed;
+		_vector3Movement.y = _jumpSpeed;
 
-		_vector3Movement.z = Speed;
+		_vector3Movement.z = _speed;
 
 		_control.Move(_vector3Movement * Time.deltaTime);
 	}
@@ -73,7 +81,7 @@ public class PlayerControl : MonoBehaviour
 	public void SetSpeed(float newLevel)
 	{
 		NewLevel();
-		Speed = Speed + newLevel;
+		_speed = _speed + newLevel;
 	}
 
 	private void NewLevel()

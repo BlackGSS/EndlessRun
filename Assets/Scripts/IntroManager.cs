@@ -5,21 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class IntroManager : MonoBehaviour
 {
-	public bool ChangeScene;
-	public Animator Anim;
+	[SerializeField]
+	private bool _changeScene;
+
+	[SerializeField]
+	private Animator _anim;
 
 	// Update is called once per frame
 	void Update()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (Anim.GetBool("Start") == false)
+			if (_anim.GetBool("Start") == false)
 			{
-				Anim.SetBool("Start", true);
+				_anim.SetBool("Start", true);
 			}
 		}
 
-		if (ChangeScene == true)
+		if (_changeScene == true)
 		{
 			SceneManager.LoadScene("Menu");
 		}

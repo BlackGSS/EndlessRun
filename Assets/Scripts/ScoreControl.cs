@@ -15,25 +15,18 @@ public class ScoreControl : MonoBehaviour
 	private TextMeshProUGUI _scoreText, _highscoreText;
 	private DeathMenu _deathMenu;
 
-	private GameManager _manager; 
-
-	private void Awake()
-	{
-		_manager = FindObjectOfType<GameManager>();
-	}
-
 	private void Start()
 	{
-		_scoreText = _manager.Score;
-		_highscoreText = _manager.Highscore;
-		_deathMenu = _manager.DeathMenu;
+		_scoreText = GameManager.instance.score;
+		_highscoreText = GameManager.instance.highScore;
+		_deathMenu = GameManager.instance.deathMenu;
 		_highscoreText.text = ((int)PlayerPrefs.GetFloat("Highscore")).ToString();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (GetComponent<PlayerControl>().isDead)
+		if (GetComponent<PlayerControl>().isDead || GameManager.instance.isPaused)
 			return;
 
 		if (_score >= _scoreToNextLevel)

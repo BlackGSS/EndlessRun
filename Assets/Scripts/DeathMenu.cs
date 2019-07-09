@@ -10,7 +10,8 @@ public class DeathMenu : MonoBehaviour
 	public TextMeshProUGUI scoreText;
 	public Image backgroundImg;
 
-	public bool isShowed = false;
+	[SerializeField]
+	private bool _isShowed = false;
 
 	private float _transition;
 
@@ -23,7 +24,7 @@ public class DeathMenu : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!isShowed)
+		if (!_isShowed)
 			return;
 
 		_transition += Time.deltaTime / 2;
@@ -34,7 +35,7 @@ public class DeathMenu : MonoBehaviour
 	{
 		gameObject.SetActive(true);
 		scoreText.text = ((int)score).ToString();
-		isShowed = true;
+		_isShowed = true;
 	}
 
 	public void Restart()
