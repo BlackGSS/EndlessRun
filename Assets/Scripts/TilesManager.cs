@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class TilesManager : MonoBehaviour
 		for (int i = 0; i < _amountTiles; i++)
 		{
 			if (i < 2)
-				SpawnTiles(0);
+				SpawnInitialTiles();
 			else
 				SpawnTiles();
 		}
@@ -41,14 +42,16 @@ public class TilesManager : MonoBehaviour
 		}
 	}
 
-	private void SpawnTiles(int index = -1)
+	private void SpawnInitialTiles()
+	{
+		//throw new NotImplementedException();
+	}
+
+	private void SpawnTiles()
 	{
 		GameObject go;
 
-		if (index == -1)
-			go = Instantiate(tilePrefabs[RandomIndex()]);
-		else
-			go = Instantiate(tilePrefabs[index]);
+		go = PoolSystem.GetChunkFromPool(Dificulties.EASY);
 
 		go.transform.SetParent(transform);
 		go.transform.position = Vector3.forward * _spawnZ;
@@ -58,24 +61,9 @@ public class TilesManager : MonoBehaviour
 
 	private void DeleteTiles()
 	{
-		Destroy(_savedTiles[0]);
+		PoolSystem.AddChunkToPool(_savedTiles[0]);
 		_savedTiles.RemoveAt(0);
 	}
 
-	private int RandomIndex()
-	{
-		if (tilePrefabs.Length <= 1)
-		{
-			return 0;
-		}
-
-		int randomIndex = _lastPrefabIndex;
-		while (randomIndex == _lastPrefabIndex)
-		{
-			randomIndex = Random.Range(1, tilePrefabs.Length);
-		}
-
-		_lastPrefabIndex = randomIndex;
-		return randomIndex;
-	}
+	
 }
