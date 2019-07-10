@@ -1,4 +1,4 @@
-# EndlessRun
+# An Endless Run Project
 Currently working on a personal Unity project programmed in C#
 
 Features: 
