@@ -2833,10 +2833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed02d3f4ecea9894dba8eba7eb2047fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefabs:
-  - {fileID: 8707205864078686811, guid: fb2049ae82a8dde4ba5faddd9c4d93f7, type: 3}
-  - {fileID: 8707205864078686811, guid: b74dc343acc2b7f4a9cf965fb8c6fce4, type: 3}
-  - {fileID: 8707205864078686811, guid: e364dd90617d2da4d9bfc17819f5b941, type: 3}
+  _initialPrefabs: {fileID: 8707205864078686811, guid: fb2049ae82a8dde4ba5faddd9c4d93f7,
+    type: 3}
 --- !u!4 &1893453673
 Transform:
   m_ObjectHideFlags: 0
@@ -2871,7 +2869,6 @@ MonoBehaviour:
   score: {fileID: 843589195}
   highScore: {fileID: 1812313253}
   deathMenu: {fileID: 728214732}
-  levelUp: {fileID: 0}
   _pauseMenu: {fileID: 1150821467}
   isPaused: 0
 --- !u!1 &2067663700
