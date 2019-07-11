@@ -9,7 +9,7 @@ public class ScoreControl : MonoBehaviour
 	private float _score = 0.0f;
 
 	private int _difficultLevel = 1;
-	private int _maxDifficultLevel = 10;
+	private int _maxDifficultLevel = 15;
 	private int _scoreToNextLevel = 10;
 
 	private TextMeshProUGUI _scoreText, _highscoreText;
@@ -44,6 +44,19 @@ public class ScoreControl : MonoBehaviour
 		_scoreToNextLevel *= 2;
 		print(_scoreToNextLevel);
 		_difficultLevel++;
+
+		if (_difficultLevel <= 3)
+		{
+			TilesManager.currentDificultChunk = Dificulties.EASY;
+		}
+		else if (_difficultLevel <= 7)
+		{
+			TilesManager.currentDificultChunk = Dificulties.MEDIUM;
+		}
+		else
+		{
+			TilesManager.currentDificultChunk = Dificulties.HARD;
+		}
 
 		GetComponent<PlayerControl>().SetSpeed(_difficultLevel);
 	}

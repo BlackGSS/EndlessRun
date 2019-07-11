@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PoolSystem 
 {	
-
 	static Dictionary<Dificulties, List<GameObject>> chunkPools = new Dictionary<Dificulties, List<GameObject>>();
 
 	static Dictionary<Dificulties, GameObject[]> chunkPrefabs = new Dictionary<Dificulties, GameObject[]>();
@@ -27,6 +26,7 @@ public class PoolSystem
 		//Comprobar si la lista del tipo solicitado existe y tiene algún elemento
 		if (chunkPools.ContainsKey(type) && chunkPools[type].Count > 0)
 		{
+			Debug.Log(chunkPools.ContainsKey(type) + "activar chunk");
 			//Si es así, devolvemos el primer elemento de esa lista y lo sacamos de la lista.
 			chunk = chunkPools[type][0];
 			chunkPools[type].RemoveAt(0);
@@ -35,12 +35,15 @@ public class PoolSystem
 		//si no es así, instanciamos un elemento del tipo seleccionado. 
 		else
 		{
+			Debug.Log(chunkPools.ContainsKey(type) + "crear nuevo chunk");
 			int randomChunk = RandomIndex(type);
 			chunk = GameObject.Instantiate(chunkPrefabs[type][randomChunk]); //TODO: Solucionar problema de alta repetititividad en una misma partida...
 		}
 
 		return chunk;
 	}
+
+	//TODO: Averiguar por qué cuando se instancian los de dificultad MEDIUM no se activan, sino que al desactivarlos y entrar por aquí crea uno directamente sin activar el otro
 
 	/// <summary>
 	/// Cargamos los prefabs de cada tipo una sola vez 
@@ -50,6 +53,7 @@ public class PoolSystem
 		//Recorremos todas las dificultades del enum Dificulties y cargamos dinámicamente todos los prefabs de cada typo. 
 		foreach (Dificulties type in Enum.GetValues(typeof(Dificulties)))
 		{
+			Debug.Log(type);
 			GameObject[] allPrefabsOfType = Resources.LoadAll<GameObject>("Chunks/" + type);
 			chunkPrefabs[type] = allPrefabsOfType;
 		}
